@@ -4,6 +4,7 @@ import Container from './Container/Cotainer';
 import Feedback from './Feedback/Feedback';
 import Statistics from './Statistics/Statistics';
 import Section from './Section/Section';
+import Notification from './Notification/Notification';
 
 class App extends Component  {
    state = {
@@ -19,7 +20,10 @@ class App extends Component  {
     })
   };
   
-   render() {
+  render() {
+    const { good, neutral, bad } = this.state;
+    const renderNotification = (good + neutral + bad) === 0;
+
      return (
        <Container>
          <Section title='Please Leave feedback'>
@@ -27,11 +31,14 @@ class App extends Component  {
          </Section>
          
          <Section title='Statistics'>
-           <Statistics text={this.state} />
+           {renderNotification ? <Notification message="There is no feedback"/> : <Statistics text={this.state} />}
          </Section>
+         
       </Container>
     )
   }
 };
 
 export default App;
+
+
